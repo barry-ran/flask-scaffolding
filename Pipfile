@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "1.1.2"
+flask-apscheduler = "1.11.0"
+flask-sqlalchemy = "2.4.4"
+flask-migrate = "2.7.0"
+pymysql = "1.0.2"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
