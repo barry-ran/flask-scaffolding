@@ -1,5 +1,5 @@
 docker container stop flask-scaffolding
-docker container flask-scaffolding
+docker container rm flask-scaffolding
 docker image rm flask-scaffolding
 
 docker build -t flask-scaffolding:latest .
