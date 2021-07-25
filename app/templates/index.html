@@ -7,40 +7,51 @@
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-<meta charset="UTF-8">
-<meta name="google" value="notranslate">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-<meta name=author content="Barry">
-<meta name=description content="Jmw-Power`top|小姐姐 优质短视频播放小站，仿短视频App播放操作模式，网页版无需安装APP，即开即用，可登录收藏你所喜欢的小姐姐视频！温馨提示：本页面仅供学习参考，请勿分享传播商用，请您在下载后的24H进行删除！本项目开源，请勿在源码分享站点付费下载。">
-<meta name=keywords content="xiaojiejie, xjj, 小姐姐, 抖音, 快手, 福利, Barry">
-<title>随机小姐姐</title>
-<link rel="stylesheet" type="text/css" href="../static/css/pc.css">
-<script type="text/javascript">
-    if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {window.location.href = "index.html";}
-</script>
+	<meta charset="UTF-8">
+	<meta name="google" value="notranslate">
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta name=author content="Barry">
+	<meta name=description
+		content="Jmw-Power`top|小姐姐 优质短视频播放小站，仿短视频App播放操作模式，网页版无需安装APP，即开即用，可登录收藏你所喜欢的小姐姐视频！温馨提示：本页面仅供学习参考，请勿分享传播商用，请您在下载后的24H进行删除！本项目开源，请勿在源码分享站点付费下载。">
+	<meta name=keywords content="xiaojiejie, xjj, 小姐姐, 抖音, 快手, 福利, Barry">
+	<title>随机小姐姐</title>
+	<link rel="stylesheet" type="text/css" href="../static/css/pc.css">
+	<script type="text/javascript">
+		if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) { window.location.href = "index.html"; }
+	</script>
+
 <body>
 	<span style="position:absolute;top:15px;left:8vw;color:#fff;font-size:16px;">
 		<strong style="font-size:18px;">随机小姐姐</strong>
 	</span>
 	<div class="app">
 		<div>
-		    <video id="player" preload autoplay webkit-playsinline='true' playsinline='true' x-webkit-airplay='true' x5-video-player-type='h5' x5-video-player-fullscreen='true' x5-video-ignore-metadata='true' controlslist="nodownload" poster="../static/image/bg.png"></video>
+			<video id="player" preload autoplay webkit-playsinline='true' playsinline='true' x-webkit-airplay='true'
+				x5-video-player-type='h5' x5-video-player-fullscreen='true' x5-video-ignore-metadata='true'
+				controlslist="nodownload" poster="../static/image/bg.png"></video>
 		</div>
 		<div class="box">
 			<div style="padding-top:15px;padding-left:20px;padding-right:20px;background-color: #0E0F1A;">
-			    <span style="color:#fff;color: #999999;background-color: #0E0F1A;">本程序仅作研究学习演示，视频采集自网络;原作者拍摄创作不易，请勿下载传播!</span>
+				<span
+					style="color:#fff;color: #999999;background-color: #0E0F1A;">本程序仅作研究学习演示，视频采集自网络;原作者拍摄创作不易，请勿下载传播!</span>
 			</div>
-			<div style="padding-top: 15px;padding-left: 20px;padding-right:20px;background-color: #0E0F1A;text-align: center;">
+			<div
+				style="padding-top: 15px;padding-left: 20px;padding-right:20px;background-color: #0E0F1A;text-align: center;">
+				<span style="color:#fff;background-color: #0E0F1A;">这是你第{{ ip_count }}次访问本网站</span><br>
 				<span style="color:#fff;background-color: #0E0F1A;">点击按钮选择【连续】/【循环】模式</span><br>
 				<span style="color:#fff;background-color: #0E0F1A;">点击【PASS】按钮刷新播放下一个</span><br>
-			    <span style="color:#fff;background-color: #0E0F1A;">单击视频 播放/暂停</span><br>
-			    <span style="color:#fff;background-color: #0E0F1A;">双击视频进入 全屏播放</span><br>
+				<span style="color:#fff;background-color: #0E0F1A;">单击视频 播放/暂停</span><br>
+				<span style="color:#fff;background-color: #0E0F1A;">双击视频进入 全屏播放</span><br>
 			</div>
-			<div style="padding-top: 15px;padding-left: 20px;padding-right:20px;background-color: #0E0F1A;text-align: center;">
+			<div
+				style="padding-top: 15px;padding-left: 20px;padding-right:20px;background-color: #0E0F1A;text-align: center;">
 				<button id="bth" class="xhms">单视频循环播放</button>
 			</div>
-			<div style="padding-top: 15px;padding-left: 20px;padding-right:20px;background-color: #0E0F1A;text-align: center;">
+			<div
+				style="padding-top: 15px;padding-left: 20px;padding-right:20px;background-color: #0E0F1A;text-align: center;">
 				<button class="pass" onclick="players();">PASS</button>
 			</div>
 		</div>
@@ -56,124 +67,125 @@
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.1.1/layer.min.js"></script>
 <script>
-$(document).ready(function(){
-    auto = false;
-    gi = 1;
-    gi = 1;//初始化GET链接序号
-    gi_max = 3;//最大GET链接序号
-    url = "./get/get1.php";
-    vdurl = "./demo.mp4";
-    player = document.getElementById("player");
-    players();
- 
-    $("#bth").on("click", function(){
-        auto = !auto;
-        this.innerText = (auto ? '自动连续播放下一个' : '单视频循环播放');
-        this.className = (auto ? 'zdlb' : 'xhms');
-    });
+	$(document).ready(function () {
+		auto = false;
+		gi = 1;
+		gi = 1;//初始化GET链接序号
+		gi_max = 3;//最大GET链接序号
+		url = "./get/get1.php";
+		vdurl = "./demo.mp4";
+		player = document.getElementById("player");
+		players();
 
-    $("#love").on("click", function(){
-    	user = $.cookie('user');
-	    if (user == null) {
-	    	$('#dlym').show();
-	    	$('.login-bg').show();
-		} else {
-			$.post("post.php",{userid:user,datastr:vdurl},function(datat,status){
-				dataobj = JSON.parse(datat);
-				if (dataobj.status == "YES") {
-					$("#love").attr('src','./img/loves.png'); 
-					console.log(dataobj.message);
-				}else{
-					console.log(dataobj.message);
-				}
-			});
-		}
-    });
+		$("#bth").on("click", function () {
+			auto = !auto;
+			this.innerText = (auto ? '自动连续播放下一个' : '单视频循环播放');
+			this.className = (auto ? 'zdlb' : 'xhms');
+		});
 
-    $("#userid").on("click", function(){
-    	user = $.cookie('user');
-	    if (user == null) {
-	    	$('#dlym').show();
-	    	$('.login-bg').show();
-		} else {
-			$.removeCookie('user'); //删除cookie
-			$("#userid").html("@Jmw-Power");
-			$("#username").val("");
-		}
-    });
-
-    $('.close-login').click(function(){
-        $('#dlym').hide();
-        $('.login-bg').hide();
-    });
-
-    $("#yuan").on("click", function(){
-    	if (gi < gi_max) {
-    		gi = gi + 1;
-    		this.innerText = "当前源【00" + gi + "】";
-    		if (gi>9) {this.innerText = "当前源【0" + gi + "】";}//大于9，缺省0
-    		if (gi==2) {this.innerText = "当前源【JSON】";}
-    		url = "./get/get" + gi + ".php";
-    	} else if (gi = gi_max) {
-			var user = $.cookie('user');
-			if (user != null) {
-				gi = 0;
-				$("#userid").html('@'+user);
-				this.innerText = "当前源【收藏】";
-				url = ("./get/get.php?user=" + user);
+		$("#love").on("click", function () {
+			user = $.cookie('user');
+			if (user == null) {
+				$('#dlym').show();
+				$('.login-bg').show();
 			} else {
-				$("#userid").html('@Jmw-Power');
-				gi = 1;
-	    		this.innerText = "当前源【精品】";
-	    		url = "./get/get" + gi + ".php";
+				$.post("post.php", { userid: user, datastr: vdurl }, function (datat, status) {
+					dataobj = JSON.parse(datat);
+					if (dataobj.status == "YES") {
+						$("#love").attr('src', './img/loves.png');
+						console.log(dataobj.message);
+					} else {
+						console.log(dataobj.message);
+					}
+				});
 			}
-    	}
-        console.log(url);
-    });
+		});
 
-    player.addEventListener('ended', function () {
-        console.log("播放结束");
-        if (auto == false) {
-            player.play();
-        } else {
-            players();
-        }
-    }, false);
+		$("#userid").on("click", function () {
+			user = $.cookie('user');
+			if (user == null) {
+				$('#dlym').show();
+				$('.login-bg').show();
+			} else {
+				$.removeCookie('user'); //删除cookie
+				$("#userid").html("@Jmw-Power");
+				$("#username").val("");
+			}
+		});
 
-    touchtime = new Date().getTime();
-    $("#player").on("click", function(){
-        if( new Date().getTime() - touchtime < 500 ){
-            console.log("dblclick");
-            FullScreen();
-        }else{
-            touchtime = new Date().getTime();
-            console.log("click");
-            if (player.paused) {
-                player.play();
-            } else {
-                player.pause();
-            }
-        }
-    });
-});
+		$('.close-login').click(function () {
+			$('#dlym').hide();
+			$('.login-bg').hide();
+		});
 
-function players() {
-    player.src = '../static/media/demo.mp4';
-    player.play();
-}
+		$("#yuan").on("click", function () {
+			if (gi < gi_max) {
+				gi = gi + 1;
+				this.innerText = "当前源【00" + gi + "】";
+				if (gi > 9) { this.innerText = "当前源【0" + gi + "】"; }//大于9，缺省0
+				if (gi == 2) { this.innerText = "当前源【JSON】"; }
+				url = "./get/get" + gi + ".php";
+			} else if (gi = gi_max) {
+				var user = $.cookie('user');
+				if (user != null) {
+					gi = 0;
+					$("#userid").html('@' + user);
+					this.innerText = "当前源【收藏】";
+					url = ("./get/get.php?user=" + user);
+				} else {
+					$("#userid").html('@Jmw-Power');
+					gi = 1;
+					this.innerText = "当前源【精品】";
+					url = "./get/get" + gi + ".php";
+				}
+			}
+			console.log(url);
+		});
 
-//进入全屏
-function FullScreen() {
-    if (player .requestFullscreen) {
-        player .requestFullscreen();
-        player.play();
-    } else if (player .mozRequestFullScreen) {
-        player .mozRequestFullScreen();
-        player.play();
-    } else if (player .webkitRequestFullScreen) {
-        player .webkitRequestFullScreen();
-        player.play();
-    }
-}
+		player.addEventListener('ended', function () {
+			console.log("播放结束");
+			if (auto == false) {
+				player.play();
+			} else {
+				players();
+			}
+		}, false);
+
+		touchtime = new Date().getTime();
+		$("#player").on("click", function () {
+			if (new Date().getTime() - touchtime < 500) {
+				console.log("dblclick");
+				FullScreen();
+			} else {
+				touchtime = new Date().getTime();
+				console.log("click");
+				if (player.paused) {
+					player.play();
+				} else {
+					player.pause();
+				}
+			}
+		});
+	});
+
+	function players() {
+		player.src = '../static/media/demo.mp4';
+		player.play();
+	}
+
+	//进入全屏
+	function FullScreen() {
+		if (player.requestFullscreen) {
+			player.requestFullscreen();
+			player.play();
+		} else if (player.mozRequestFullScreen) {
+			player.mozRequestFullScreen();
+			player.play();
+		} else if (player.webkitRequestFullScreen) {
+			player.webkitRequestFullScreen();
+			player.play();
+		}
+	}
 </script>
+
 </html>

@@ -14,8 +14,7 @@
                 "FLASK_ENV": "development"
             },
             "args": [
-                "run",
-                "--no-debugger"
+                "run"
             ],
             "jinja": true
         }

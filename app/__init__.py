@@ -1,5 +1,5 @@
 from flask import Flask
-from . import routes
+from . import routes, models
 from .config import config
 
 # flask run命令会自动调用create_app函数 https://dormousehole.readthedocs.io/en/latest/cli.html
@@ -7,8 +7,9 @@ from .config import config
 def create_app(config_name='default'):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-    config[config].init_app(app)
+    config[config_name].init_app(app)
 
+    models.init_app(app)
     routes.init_app(app)
 
     return app
