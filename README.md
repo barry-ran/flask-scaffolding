@@ -64,6 +64,7 @@ flask db upgrade # 升级数据库（将上述修改应用到实际数据库中�
 - [使用 flask migrate 来迁移数据结构](https://einverne.github.io/post/2018/05/flask-migrate-tutorial.html)
 - [flask_sqlalchemy增删改查](https://blog.csdn.net/Co_zy/article/details/77937195)
 - [flask写日志](https://blog.csdn.net/qq_36441027/article/details/111182467)
+- [flask错误处理](https://dormousehole.readthedocs.io/en/latest/errorhandling.html)
 
 # TODO
 - dotenv配置敏感信息

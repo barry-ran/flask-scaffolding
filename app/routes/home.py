@@ -8,7 +8,8 @@ home_bp = Blueprint('home_bp', __name__)
 def index():
     ip = request.remote_addr
     count = IpCount.get_count(ip)
-    IpCount.set_count(ip, count + 1)
+    count = count + 1
+    IpCount.set_count(ip, count)
 
     Log.logger().info('index:count:%d', count)
 
