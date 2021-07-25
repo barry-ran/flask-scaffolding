@@ -9,8 +9,4 @@ def init_app(app):
     db.init_app(app)
     migrate.init_app(app)
 
-    # 数据库不存在则创建
-    with app.app_context():
-        db.create_all()
-    
     return db
