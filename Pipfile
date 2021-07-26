@@ -9,6 +9,7 @@ flask-apscheduler = "1.11.0"
 flask-sqlalchemy = "2.4.4"
 flask-migrate = "2.7.0"
 pymysql = "1.0.2"
+python-dotenv = "0.19.0"
 
 [dev-packages]
 

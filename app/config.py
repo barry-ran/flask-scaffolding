@@ -1,6 +1,10 @@
 import os
+from dotenv import load_dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+dotenv_path = os.path.join(basedir, '.env')
+load_dotenv(dotenv_path)
 
 class Config:
     # falsk的内置config key: https://flask.palletsprojects.com/en/2.0.x/config/
@@ -11,7 +15,9 @@ class Config:
     # init_app是为了在初始化app时附加一些额外配置用的
     @classmethod
     def init_app(cls, app):
-        print('SQLALCHEMY_DATABASE_URI:', cls.SQLALCHEMY_DATABASE_URI)
+        # 测试
+        print("*****print*****:SECRET_KEY:", cls.SECRET_KEY)
+        print('*****print*****:SQLALCHEMY_DATABASE_URI:', cls.SQLALCHEMY_DATABASE_URI)
         pass
 
 class DevelopmentConfig(Config):

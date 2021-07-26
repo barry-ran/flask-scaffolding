@@ -245,6 +245,8 @@ yum install zip unzip
 - [使用Docker搭建MySQL服务](https://www.cnblogs.com/sablier/p/11605606.html)
 - [探索Docker容器下MySQL的数据持久化](https://www.dazhuanlan.com/2019/10/18/5da8dc453e9f9/)
 
+## 其他
+- [使用dotnev加载环境变量](https://github.com/theskumar/python-dotenv#readme)
+
 # TODO
-- dotenv配置敏感信息
 - 在线日志
