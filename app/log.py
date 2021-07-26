@@ -11,7 +11,7 @@ def handle_error(error):
 
 class Log:
     LOG_PATH = os.path.join(basedir, 'logs')
-    LOG_NAME = os.path.join(LOG_PATH, 'app.log')
+    LOG_NAME = os.path.join(LOG_PATH, 'log.txt')
     LOG_LEVEL = 'INFO'
 
     current_app = None

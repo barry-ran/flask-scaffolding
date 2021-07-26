@@ -1,0 +1,9 @@
+<!doctype html>
+<title>Download</title>
+<h1>Directory listing</h1>
+<hr>
+<ul>
+    {% for key,value in files.items():%}
+    <li><a href="{{value}}">{{key}}</a></li>
+    {% endfor %}
+</ul>
