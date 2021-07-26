@@ -247,6 +247,3 @@ yum install zip unzip
 
 ## 其他
 - [使用dotnev加载环境变量](https://github.com/theskumar/python-dotenv#readme)
-
-# TODO
-- 在线日志
