@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+    flask-scaffolding:
+        image: flask-scaffolding:latest
+        build: .
+        container_name: flask-scaffolding
+        restart: always
+        ports:
+            - "5000:80"

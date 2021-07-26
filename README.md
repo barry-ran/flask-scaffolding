@@ -87,11 +87,22 @@ flask db upgrade # 升级数据库（将上述修改应用到实际数据库中�
 - nginx：反向代理，高效处理静态资源
 - supervisor：进程管理，监控并自动重启nginx和gunicorn
 
+安装好docker以后clone下代码来可以一键部署：
+```bash
+# 不带-d，调试用
+# docker-compose up
+docker-compose up -d
+
+# 也可以直接执行提供的script来部署
+./script/compose-deploy.sh
+```
+
 配置文件说明：
 - gunicorn.conf.py：gunicorn配置文件：配置usgi服务的进程数，端口号等
 - nginx_flask.conf：nginx配置文件：配置nginx反向代理的端口号等
 - supervisord.conf：supervisor配置文件：配置supervisor如何监控&启动gunicorn和nginx
 - Dockerfile：docker image配置文件，用于docker部署
+- docker-compose.yaml：docker-compose配置文件，用于方便的部署docker
 - requirements.txt：python依赖项，用于docker部署时安装依赖，一般开发完增加了依赖项的话需要重新生产该文件
 - Pipfile：pipenv依赖配置，用于开发阶段的环境配置
 
@@ -156,6 +167,15 @@ sudo yum -y install docker-ce
 sudo systemctl start docker
 ```
 
+### 安装docker compose
+```bash
+#国内访问github太慢，可以使用镜像站 github.com.cnpmjs.org
+#curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" > /usr/bin/docker-compose
+curl -L "https://github.com.cnpmjs.org/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" > /usr/bin/docker-compose
+
+chmod +x /usr/bin/docker-compose
+```
+
 # 常用命令
 ## pipenv
 ``` bash
@@ -213,6 +233,9 @@ yum install zip unzip
 - [docker部署python](https://docs.docker.com/language/python/build-images/)
 - [Deploy flask app with nginx using gunicorn and supervisor](https://medium.com/ymedialabs-innovation/deploy-flask-app-with-nginx-using-gunicorn-and-supervisor-d7a93aa07c18)
 - [用docker部署flask+gunicorn+nginx](https://www.cnblogs.com/xuanmanstein/p/7692256.html)
+- [部署Flask + uWSGI + Nginx(支持https)](https://blog.zengrong.net/post/deploy-flask-uwsgi-nginx/)
+- [Flask后端实践 番外篇 Docker部署优化(docker-compose)](https://blog.csdn.net/qq_22034353/article/details/89950228)
+- [docker和docker compose版本匹配](https://docs.docker.com/compose/compose-file/)
 
 ## docker部署mysql
 - [使用Docker搭建MySQL服务](https://www.cnblogs.com/sablier/p/11605606.html)
