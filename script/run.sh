@@ -4,5 +4,5 @@ docker image rm flask-scaffolding
 
 docker build -t flask-scaffolding:latest .
 # 不带-d，调试用
-docker run -p 5000:80 --name=flask-scaffolding flask-scaffolding
-#docker run -d -p 5000:80 --name=flask-scaffolding flask-scaffolding
+#docker run -p 5000:80 --name=flask-scaffolding flask-scaffolding
+docker run -d -p 5000:80 --name=flask-scaffolding flask-scaffolding
