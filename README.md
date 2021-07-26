@@ -67,9 +67,11 @@ flask db upgrade # 升级数据库（将上述修改应用到实际数据库中�
 - [flask错误处理](https://dormousehole.readthedocs.io/en/latest/errorhandling.html)
 - [docker部署python](https://docs.docker.com/language/python/build-images/)
 - [Deploy flask app with nginx using gunicorn and supervisor](https://medium.com/ymedialabs-innovation/deploy-flask-app-with-nginx-using-gunicorn-and-supervisor-d7a93aa07c18)
+- [用docker部署flask+gunicorn+nginx](https://www.cnblogs.com/xuanmanstein/p/7692256.html)
 
 # TODO
 - dotenv配置敏感信息
 - 生产启动
+  - supervisor
 - 文档整理
 - 在线日志

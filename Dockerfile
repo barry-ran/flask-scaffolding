@@ -17,6 +17,21 @@ RUN pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 RUN pip3 install gunicorn -i https://pypi.tuna.tsinghua.edu.cn/simple
 RUN pip3 install gevent -i https://pypi.tuna.tsinghua.edu.cn/simple
 
+# 更新apt源
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -y nginx
+
+# 配置nginx
+RUN rm /etc/nginx/sites-enabled/default
+COPY nginx_flask.conf /etc/nginx/sites-available/
+RUN ln -s /etc/nginx/sites-available/nginx_flask.conf /etc/nginx/sites-enabled/nginx_flask.conf
+# 是否后台启动：决定启动nginx命令是否block
+#RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+
+# 启动nginx
+RUN nginx
+
 # 设置环境变量(给flask db用)
 ENV FLASK_APP="app:create_app('production')"
 ENV FLASK_ENV="production"
