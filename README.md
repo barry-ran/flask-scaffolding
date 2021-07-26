@@ -71,7 +71,6 @@ flask db upgrade # 升级数据库（将上述修改应用到实际数据库中�
 
 # TODO
 - dotenv配置敏感信息
-- 生产启动
-  - supervisor
 - 文档整理
 - 在线日志
+- 热更新
