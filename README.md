@@ -185,7 +185,8 @@ pipenv lock -r > ./app/requirements.txt # 导出所有依赖到requirements
 pip freeze > requirements.txt # 导出所有依赖到requirements (两种方法都可以)
 ```
 ## 数据库
-第一次配置环境用下面命令可以在数据库中创建表（如果是mysql需要手动创建database）
+本项目中已经生成了sqlite的数据库文件(db/data.db)，
+如果你使用自己的数据库，第一次配置环境时用下面命令可以在数据库中创建表（如果是mysql需要手动创建database）
 ```bash
 flask db init  # 第一次初始化数据库升级环境
 flask db migrate -m "Initial migration." # 更改数据库结构
@@ -198,6 +199,11 @@ flask db upgrade # 升级数据库（将上述修改应用到实际数据库中�
 docker ps
 # 进入容器
 docker exec -it <container id> bash
+
+docker attach <container id>
+
+# 后台运行docker并且不退出(dit)
+docker run -dit -p 5000:80 --name=flask-scaffolding -v $(pwd)/app:/deploy/app flask-scaffolding
 
 # 安装vim
 apt-get update

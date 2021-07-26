@@ -1,3 +1,3 @@
 # 不带-d，调试用
-# docker-compose up
-docker-compose up -d
+# docker-compose up --build
+docker-compose up -d --build

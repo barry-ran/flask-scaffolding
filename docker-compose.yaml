@@ -7,3 +7,5 @@ services:
         restart: always
         ports:
             - "5000:80"
+        volumes:
+            - ./app:/deploy/app

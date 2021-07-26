@@ -1,11 +1,12 @@
 # syntax=docker/dockerfile:1
 FROM python:3.7-slim-buster
 
-# 设置工作目录(后续都不需要指定完整路径了，默认工作目录/app)
-WORKDIR /app
+RUN mkdir /deploy
+# 设置工作目录(后续都不需要指定完整路径了，默认工作目录/deploy)
+WORKDIR /deploy
 
-# 复制源码
-COPY ./app ./app
+# 复制源码 (使用映射代替copy)
+#COPY ./app ./deploy/app
 
 # 复制发布相关脚本
 COPY requirements.txt requirements.txt
@@ -29,15 +30,6 @@ RUN ln -s /etc/nginx/sites-available/nginx_flask.conf /etc/nginx/sites-enabled/n
 # 是否后台启动：决定启动nginx命令是否block，因为supervisor不能监控后台进程，command 不能为后台运行命令
 # 用supervisor启动nginx的话需要关掉daemon
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-
-# 设置环境变量(给flask db用)
-ENV FLASK_APP="app:create_app('production')"
-ENV FLASK_ENV="production"
-
-# 创建数据库
-RUN flask db init
-RUN flask db migrate
-RUN flask db upgrade
 
 # supervisord https://www.jianshu.com/p/0b9054b33db3
 RUN mkdir -p /var/log/supervisor
