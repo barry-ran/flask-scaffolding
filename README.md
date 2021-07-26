@@ -1,21 +1,12 @@
 # flask-scaffolding
-flask项目脚手架，可以基于此脚手架快速开发，减少重复操作
+![](docs/image/flask-deploy.png)
+flask项目脚手架，可以基于此脚手架快速开发，减少重复操作：
+- vscode作为开发IDE
+- 使用[pipenv](https://pipenv.pypa.io/en/latest/)管理开发环境
+- 基于docker的nginx+gunicorn+supervisor部署
 
-# 使用[pipenv](https://pipenv.pypa.io/en/latest/)管理依赖
-```
-pipenv install  # 创建虚拟环境并安装依赖（只有第一次搭建环境需要安装）
-pipenv shell  # 激活虚拟环境
-pipenv lock -r > ./app/requirements.txt # 导出所有依赖到requirements
-pip freeze > requirements.txt # 导出所有依赖到requirements (两种方法都可以)
-```
-# 初始化数据库
-```
-flask db init  # 第一次初始化数据库升级环境
-flask db migrate -m "Initial migration." # 更改数据库结构
-flask db upgrade # 升级数据库（将上述修改应用到实际数据库中）
-```
-
-# vscode作为开发IDE
+# 开发环境配置
+## vscode作为开发IDE
 1. 安装[python插件](https://code.visualstudio.com/docs/python/python-tutorial)
 
 2. 在左下角切换python环境为pipenv创建的环境：
@@ -54,23 +45,180 @@ flask db upgrade # 升级数据库（将上述修改应用到实际数据库中�
     ```
 4. 运行单个python文件：可以在python文件右上角直接run python file in terminal
     ![](docs/image/run-python.png)
+## 使用[pipenv](https://pipenv.pypa.io/en/latest/)管理依赖
+```
+pipenv install  # 创建虚拟环境并安装依赖（只有第一次搭建环境需要安装）
+pipenv shell  # 激活虚拟环境
+pipenv lock -r > ./app/requirements.txt # 导出所有依赖到requirements
+pip freeze > requirements.txt # 导出所有依赖到requirements (两种方法都可以)
+```
 
+## 数据库
+### docker安装mysql（可选）
+- 构建docker镜像
+```
+# 如果没有本地image则会自动下载
+docker run --name mysql5.7 -p 4418:3306 -v ~/conf:/etc/mysql/conf.d -v ~/logs:/logs -v ~/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=mysql123465 -d mysql/mysql-server:5.7
+```
+- 增加新用户
+```
+docker exec -it mysql5.7 bash
+mysql -uroot -pmysql123465
+use mysql;
+grant all privileges on *.* to werobot@'%' identified by "mysql123465";
+flush privileges;
+```
+- 创建数据库
+```
+create database werobot;
+```
+
+### 初始化数据库
+第一次配置环境用下面命令可以在数据库中创建表（如果是mysql需要手动创建database）
+```
+flask db init  # 第一次初始化数据库升级环境
+flask db migrate -m "Initial migration." # 更改数据库结构
+flask db upgrade # 升级数据库（将上述修改应用到实际数据库中）
+```
+
+# 部署
+基于docker的nginx+gunicorn+supervisor部署：
+- gunicorn：开启多进程基于gevent为flask提供wsgi服务
+- nginx：反向代理，高效处理静态资源
+- supervisor：进程管理，监控并自动重启nginx和gunicorn
+
+配置文件说明：
+- gunicorn.conf.py：gunicorn配置文件：配置usgi服务的进程数，端口号等
+- nginx_flask.conf：nginx配置文件：配置nginx反向代理的端口号等
+- supervisord.conf：supervisor配置文件：配置supervisor如何监控&启动gunicorn和nginx
+- Dockerfile：docker image配置文件，用于docker部署
+- requirements.txt：python依赖项，用于docker部署时安装依赖，一般开发完增加了依赖项的话需要重新生产该文件
+- Pipfile：pipenv依赖配置，用于开发阶段的环境配置
+
+## [安装docker](https://www.runoob.com/docker/centos-docker-install.html)
+Docker支持以下的CentOS版本：
+
+- CentOS 7 (64-bit)
+- CentOS 6.5 (64-bit) 或更高的版本
+
+### 前提条件
+目前，CentOS 仅发行版本中的内核支持 Docker。
+
+Docker 运行在 CentOS 7 上，要求系统为64位、系统内核版本为 3.10 以上。
+
+Docker 运行在 CentOS-6.5 或更高的版本的 CentOS 上，要求系统为64位、系统内核版本为 2.6.32-431 或者更高版本。
+
+### 使用 yum 安装（CentOS 7下）
+Docker 要求 CentOS 系统的内核版本高于 3.10 ，查看本页面的前提条件来验证你的CentOS 版本是否支持 Docker 。
+
+通过 uname -r 命令查看你当前的内核版本
+```
+uname -r 
+```
+
+### 安装 Docker
+移除旧的版本：
+```
+sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine
+```
+
+安装一些必要的系统工具：
+```
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+```
+
+添加软件源信息：
+```
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+```
+
+更新 yum 缓存：
+```
+sudo yum makecache fast
+```
+
+安装 Docker-ce：
+```
+sudo yum -y install docker-ce
+```
+
+启动 Docker 后台服务:
+```
+sudo systemctl start docker
+```
+
+# 常用命令
+## pipenv
+``` bash
+pipenv install  # 创建虚拟环境并安装依赖（只有第一次搭建环境需要安装）
+pipenv shell  # 激活虚拟环境
+pipenv lock -r > ./app/requirements.txt # 导出所有依赖到requirements
+pip freeze > requirements.txt # 导出所有依赖到requirements (两种方法都可以)
+```
+## 数据库
+第一次配置环境用下面命令可以在数据库中创建表（如果是mysql需要手动创建database）
+```bash
+flask db init  # 第一次初始化数据库升级环境
+flask db migrate -m "Initial migration." # 更改数据库结构
+flask db upgrade # 升级数据库（将上述修改应用到实际数据库中）
+```
+
+## docker
+```bash
+# 列出正在运行的容器
+docker ps
+# 进入容器
+docker exec -it <container id> bash
+
+# 安装vim
+apt-get update
+apt-get install vim
+```
+
+## centos
+```bash
+# 安装rzls
+yum -y install lrzsz
+# 安装unzip
+yum install zip unzip
+```
 
 # 参考文档
+## 项目结构
 - [flask项目的结构](https://lepture.com/en/2018/structure-of-a-flask-project)
 - [Flask项目结构模板(主要参考这个)](https://www.justdopython.com/2020/01/18/python-web-flask-project-125/)
 - [Flask 从入门到放弃6: 网站结构最佳实践(来自狗书第七章：大型程序的结构)](https://lvraikkonen.github.io/2017/08/28/Flask%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%836:%20%E7%BD%91%E7%AB%99%E7%BB%93%E6%9E%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/)
+
+## 环境搭建
 - [python vscode环境搭建](https://zhuanlan.zhihu.com/p/64994681)
+
+## 数据库
 - [使用 flask migrate 来迁移数据结构](https://einverne.github.io/post/2018/05/flask-migrate-tutorial.html)
 - [flask_sqlalchemy增删改查](https://blog.csdn.net/Co_zy/article/details/77937195)
+
+## 日志
 - [flask写日志](https://blog.csdn.net/qq_36441027/article/details/111182467)
 - [flask错误处理](https://dormousehole.readthedocs.io/en/latest/errorhandling.html)
+
+## 部署
 - [docker部署python](https://docs.docker.com/language/python/build-images/)
 - [Deploy flask app with nginx using gunicorn and supervisor](https://medium.com/ymedialabs-innovation/deploy-flask-app-with-nginx-using-gunicorn-and-supervisor-d7a93aa07c18)
 - [用docker部署flask+gunicorn+nginx](https://www.cnblogs.com/xuanmanstein/p/7692256.html)
 
+## docker部署mysql
+- [使用Docker搭建MySQL服务](https://www.cnblogs.com/sablier/p/11605606.html)
+- [探索Docker容器下MySQL的数据持久化](https://www.dazhuanlan.com/2019/10/18/5da8dc453e9f9/)
+
 # TODO
 - dotenv配置敏感信息
-- 文档整理
 - 在线日志
 - 热更新
