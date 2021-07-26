@@ -200,8 +200,6 @@ docker ps
 # 进入容器
 docker exec -it <container id> bash
 
-docker attach <container id>
-
 # 后台运行docker并且不退出(dit)
 docker run -dit -p 5000:80 --name=flask-scaffolding -v $(pwd)/app:/deploy/app flask-scaffolding
 
@@ -250,4 +248,3 @@ yum install zip unzip
 # TODO
 - dotenv配置敏感信息
 - 在线日志
-- 热更新
