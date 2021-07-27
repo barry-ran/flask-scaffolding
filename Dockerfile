@@ -20,8 +20,7 @@ RUN pip3 install gevent -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 # 更新apt源
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install -y nginx supervisor
+RUN apt-get update && apt-get install -y nginx supervisor
 
 # 配置nginx
 RUN rm /etc/nginx/sites-enabled/default

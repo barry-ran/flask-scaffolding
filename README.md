@@ -252,6 +252,7 @@ yum install zip unzip
 ## docker部署mysql
 - [使用Docker搭建MySQL服务](https://www.cnblogs.com/sablier/p/11605606.html)
 - [探索Docker容器下MySQL的数据持久化](https://www.dazhuanlan.com/2019/10/18/5da8dc453e9f9/)
+- [9个docker常见错误(发现了docker yml中不能访问volume映射的原因)](https://runnable.com/blog/9-common-dockerfile-mistakes)
 
 ## 其他
 - [使用dotnev加载环境变量](https://github.com/theskumar/python-dotenv#readme)
