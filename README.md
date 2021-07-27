@@ -74,11 +74,19 @@ create database werobot;
 ```
 
 ### 初始化数据库
-第一次配置环境用下面命令可以在数据库中创建表（如果是mysql需要手动创建database）
+使用[Flask-Migrate](https://github.com/miguelgrinberg/Flask-Migrate)管理数据库
+- 第一次配置开发环境需要先执行以下命令初始化迁移文件，并生成表
+```bash
+# 默认在当前目录生成迁移文件夹migrations，可以通过-d选项来指定不同路径
+# 如果设定了其它路径，后续命令都需要使用-d指定路径
+flask db init  # 第一次初始化数据库升级环境（生成migrations目录，需要提交到代码仓库中纳入版本管理）
+flask db migrate -m "Initial migration." # 更新数据库结构到migrations（-m可选）
+flask db upgrade # 更新实际数据库（将migrations修改应用到实际数据库中，第一次执行会创建表）
 ```
-flask db init  # 第一次初始化数据库升级环境
-flask db migrate -m "Initial migration." # 更改数据库结构
-flask db upgrade # 升级数据库（将上述修改应用到实际数据库中）
+- 后续开发过程中更改表结构只需要执行以下命令即可更新数据库
+```
+flask db migrate
+flask db upgrade
 ```
 
 # 部署
@@ -185,12 +193,12 @@ pipenv lock -r > ./app/requirements.txt # 导出所有依赖到requirements
 pip freeze > requirements.txt # 导出所有依赖到requirements (两种方法都可以)
 ```
 ## 数据库
-本项目中已经生成了sqlite的数据库文件(db/data.db)，
-如果你使用自己的数据库，第一次配置环境时用下面命令可以在数据库中创建表（如果是mysql需要手动创建database）
 ```bash
-flask db init  # 第一次初始化数据库升级环境
-flask db migrate -m "Initial migration." # 更改数据库结构
-flask db upgrade # 升级数据库（将上述修改应用到实际数据库中）
+# 默认在当前目录生成迁移文件夹migrations，可以通过-d选项来指定不同路径
+# 如果设定了其它路径，后续命令都需要使用-d指定路径
+flask db init  # 第一次初始化数据库升级环境（生成migrations目录，需要提交到代码仓库中纳入版本管理）
+flask db migrate -m "Initial migration." # 更新数据库结构到migrations（-m可选）
+flask db upgrade # 更新实际数据库（将migrations修改应用到实际数据库中，第一次执行会创建表）
 ```
 
 ## docker

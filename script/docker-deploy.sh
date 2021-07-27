@@ -1,3 +1,4 @@
+#!/bin/bash
 docker container stop flask-scaffolding
 docker container rm flask-scaffolding
 docker image rm flask-scaffolding

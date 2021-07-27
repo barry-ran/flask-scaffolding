@@ -35,5 +35,13 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mkdir -p /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# 复制运行脚本
+COPY ./script/run.sh ./run.sh
+RUN chmod +x ./run.sh
+
+# 设置环境变量(给flask迁移db用)
+ENV FLASK_APP="app:create_app('production')"
+ENV FLASK_ENV="production"
+
 # 运行(最后这条CMD命令需要阻塞，否则docker启动后接着退出)
-CMD ["/usr/bin/supervisord"]
+CMD ["./run.sh"]
