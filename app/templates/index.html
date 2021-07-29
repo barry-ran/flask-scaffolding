@@ -83,41 +83,6 @@
 			this.className = (auto ? 'zdlb' : 'xhms');
 		});
 
-		$("#love").on("click", function () {
-			user = $.cookie('user');
-			if (user == null) {
-				$('#dlym').show();
-				$('.login-bg').show();
-			} else {
-				$.post("post.php", { userid: user, datastr: vdurl }, function (datat, status) {
-					dataobj = JSON.parse(datat);
-					if (dataobj.status == "YES") {
-						$("#love").attr('src', './img/loves.png');
-						console.log(dataobj.message);
-					} else {
-						console.log(dataobj.message);
-					}
-				});
-			}
-		});
-
-		$("#userid").on("click", function () {
-			user = $.cookie('user');
-			if (user == null) {
-				$('#dlym').show();
-				$('.login-bg').show();
-			} else {
-				$.removeCookie('user'); //删除cookie
-				$("#userid").html("@Jmw-Power");
-				$("#username").val("");
-			}
-		});
-
-		$('.close-login').click(function () {
-			$('#dlym').hide();
-			$('.login-bg').hide();
-		});
-
 		$("#yuan").on("click", function () {
 			if (gi < gi_max) {
 				gi = gi + 1;
@@ -169,8 +134,12 @@
 	});
 
 	function players() {
-		player.src = '../static/media/demo.mp4';
-		player.play();
+		$.get("/girls", { name: 'Brad' }, function (data) {
+			console.log("girls response:", data);
+			player.src = data;
+			player.play();
+		});
+
 	}
 
 	//进入全屏
