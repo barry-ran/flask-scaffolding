@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, send_from_directory
+from flask import Blueprint, render_template, send_from_directory, current_app
 from ..log import Log
 
 # https://blog.csdn.net/kaever/article/details/116312794?spm=1001.2014.3001.5501
@@ -11,6 +11,9 @@ logs_dir = os.path.join(basedir, '../logs')
         
 @log_list_bp.route('/logs', methods=['GET', 'POST'])
 def log_list():
+    if current_app.config['PRODUCTION_CONFIG']:
+        return 'no log on production'
+    
     names = os.listdir(logs_dir)
     files = {}
     for name in names:

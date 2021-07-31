@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, current_app
 from ..models.ip_count import IpCount
 from ..log import Log
 
@@ -19,8 +19,8 @@ def index():
     IpCount.set_count(ip, count)
 
     Log.logger().info('index ip:%s count:%d', ip, count)
-    # 测试
-    Log.logger().info("SECRET_KEY:%s", os.environ.get('SECRET_KEY'))
-    
+
+    if not current_app.config['PRODUCTION_CONFIG']:
+        Log.logger().info("SECRET_KEY:%s", os.environ.get('SECRET_KEY'))
 
     return render_template('index.html', ip_count=count)
