@@ -18,7 +18,8 @@
 		content="Jmw-Power`top|小姐姐 优质短视频播放小站，仿短视频App播放操作模式，网页版无需安装APP，即开即用，可登录收藏你所喜欢的小姐姐视频！温馨提示：本页面仅供学习参考，请勿分享传播商用，请您在下载后的24H进行删除！本项目开源，请勿在源码分享站点付费下载。">
 	<meta name=keywords content="xiaojiejie, xjj, 小姐姐, 抖音, 快手, 福利, Barry">
 	<title>随机小姐姐</title>
-	<link rel="stylesheet" type="text/css" href="../static/css/pc.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pc.css') }}">
+	<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}" />
 	<script type="text/javascript">
 		if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) { window.location.href = "index.html"; }
 	</script>
@@ -31,7 +32,7 @@
 		<div>
 			<video id="player" preload autoplay webkit-playsinline='true' playsinline='true' x-webkit-airplay='true'
 				x5-video-player-type='h5' x5-video-player-fullscreen='true' x5-video-ignore-metadata='true'
-				controlslist="nodownload" poster="../static/image/bg.png"></video>
+				controlslist="nodownload" poster="../static/image/bg.gif"></video>
 		</div>
 		<div class="box">
 			<div style="padding-top:15px;padding-left:20px;padding-right:20px;background-color: #0E0F1A;">
@@ -68,12 +69,8 @@
 <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.1.1/layer.min.js"></script>
 <script>
 	$(document).ready(function () {
-		auto = false;
-		gi = 1;
-		gi = 1;//初始化GET链接序号
-		gi_max = 3;//最大GET链接序号
-		url = "./get/get1.php";
-		vdurl = "./demo.mp4";
+		auto = true;
+
 		player = document.getElementById("player");
 		players();
 
@@ -81,30 +78,6 @@
 			auto = !auto;
 			this.innerText = (auto ? '自动连续播放下一个' : '单视频循环播放');
 			this.className = (auto ? 'zdlb' : 'xhms');
-		});
-
-		$("#yuan").on("click", function () {
-			if (gi < gi_max) {
-				gi = gi + 1;
-				this.innerText = "当前源【00" + gi + "】";
-				if (gi > 9) { this.innerText = "当前源【0" + gi + "】"; }//大于9，缺省0
-				if (gi == 2) { this.innerText = "当前源【JSON】"; }
-				url = "./get/get" + gi + ".php";
-			} else if (gi = gi_max) {
-				var user = $.cookie('user');
-				if (user != null) {
-					gi = 0;
-					$("#userid").html('@' + user);
-					this.innerText = "当前源【收藏】";
-					url = ("./get/get.php?user=" + user);
-				} else {
-					$("#userid").html('@Jmw-Power');
-					gi = 1;
-					this.innerText = "当前源【精品】";
-					url = "./get/get" + gi + ".php";
-				}
-			}
-			console.log(url);
 		});
 
 		player.addEventListener('ended', function () {
@@ -134,10 +107,18 @@
 	});
 
 	function players() {
-		$.get("/girls", { name: 'Brad' }, function (data) {
+		$.get("/girls", function (data) {
 			console.log("girls response:", data);
 			player.src = data;
 			player.play();
+			$.ajax({
+				url: data, type: 'GET', complete: function (response) {
+					if (response.status != 200) {
+						console.log('request video url failed:', response.status);
+						players();
+					}
+				}
+			});
 		});
 
 	}

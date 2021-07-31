@@ -1,10 +1,22 @@
 # flask-scaffolding
 ![](docs/image/flask-deploy.png)
-flask项目脚手架，可以基于此脚手架快速开发，减少重复操作：
+flask项目脚手架，可以基于此脚手架快速开发，减少重复操作，目前已经提供的能力：
 - vscode作为开发IDE
-- 使用[pipenv](https://pipenv.pypa.io/en/latest/)管理开发环境
-- 基于docker的nginx+gunicorn+supervisor部署
+- [pipenv](https://pipenv.pypa.io/en/latest/)管理开发环境
+- 基于docker的nginx+gunicorn+supervisor一键部署
+- migrations管理数据库迁移
+- dotenv管理环境变量敏感信息
+- 日志（支持在线预览）
+- 开发/线上配置Config
+- 规范的flask目录结构
 
+使用步骤：
+1. 根据文档描述配置开发环境
+2. 根据需要初始化数据库（部署会尝试自动初始化数据库）
+3. 开发/部署
+
+下面是demo展示：
+![](docs/image/screenshot.png)
 # 开发环境配置
 ## vscode作为开发IDE
 1. 安装[python插件](https://code.visualstudio.com/docs/python/python-tutorial)
@@ -256,3 +268,7 @@ yum install zip unzip
 
 ## 其他
 - [使用dotnev加载环境变量](https://github.com/theskumar/python-dotenv#readme)
+- [flask处理ajax](https://blog.csdn.net/jinixin/article/details/80042763)
+- [flask favicon.ico 404(浏览器默认行为，需要我们在html中指定icon的路径)](https://stackoverflow.com/questions/48863061/favicon-ico-results-in-404-error-in-flask-app)
+- [Uncaught (in promise) DOMException: play() failed because the user didn't interact with the document first (chrome等浏览器不允许带声音的媒体自动播放)](https://developer.chrome.com/blog/autoplay/)
+- [demo源码参考](https://github.com/JMWpower/xiaojiejie)
