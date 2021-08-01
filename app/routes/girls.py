@@ -1,8 +1,7 @@
+import random
+import requests
 from flask import Blueprint, request
 from ..log import Log
-
-import requests
-import random
 
 girls_bp = Blueprint('girls_bp', __name__)
 

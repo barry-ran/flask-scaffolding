@@ -272,3 +272,4 @@ yum install zip unzip
 - [flask favicon.ico 404(浏览器默认行为，需要我们在html中指定icon的路径)](https://stackoverflow.com/questions/48863061/favicon-ico-results-in-404-error-in-flask-app)
 - [Uncaught (in promise) DOMException: play() failed because the user didn't interact with the document first (chrome等浏览器不允许带声音的媒体自动播放)](https://developer.chrome.com/blog/autoplay/)
 - [demo源码参考](https://github.com/JMWpower/xiaojiejie)
+- [google-python命名规范](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/#id16)
