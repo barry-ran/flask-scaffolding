@@ -10,6 +10,12 @@ flask项目脚手架，可以基于此脚手架快速开发，减少重复操作
 - 开发/线上配置Config
 - 规范的flask目录结构
 
+这里有一个基于flask-scaffolding开发的微信公众号后台项目[werobot](https://github.com/barry-ran/werobot)
+
+扫码下面二维码即可体验：
+
+![](https://github.com/barry-ran/werobot/blob/main/docs/image/coderbox.jpg)
+
 使用步骤：
 1. 根据文档描述配置开发环境
 2. 根据需要初始化数据库（部署会尝试自动初始化数据库）
