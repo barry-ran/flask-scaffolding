@@ -5,6 +5,8 @@ from ..log import Log
 
 home_bp = Blueprint('home_bp', __name__)
 
+# 如果需要多个路径路由到通过一个函数，直接在此添加即可
+# @home_bp.route('/index.html', methods=['GET', 'POST'])
 @home_bp.route('/', methods=['GET', 'POST'])
 def index():
     ip = request.remote_addr
